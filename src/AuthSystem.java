@@ -21,6 +21,17 @@ public class AuthSystem {
         userFactory.registerUser(name, email, password);
     }
 
+    public void login() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese su correo:");
+        String email = scanner.nextLine();
+        System.out.println("Ingrese su contraseña:");
+        String password = scanner.nextLine();
+
+        userFactory.loginUser(email, password); //llama el login el FactoryMethod
+    }
+
     public void readUsers() {
         userFactory.readUsers();
     }
@@ -52,7 +63,7 @@ public class AuthSystem {
 
         System.out.println("Seleccione el tipo de usuario para registrar (1. Admin, 2. Regular):");
         int userType = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer
+        scanner.nextLine();
 
         UserFactory factory = null;
 
@@ -69,35 +80,38 @@ public class AuthSystem {
         while (running) {
             System.out.println("\nSeleccione una opción:");
             System.out.println("1. Registrar usuario");
-            System.out.println("2. Leer usuarios");
-            System.out.println("3. Actualizar usuario");
-            System.out.println("4. Eliminar usuario");
-            System.out.println("5. Salir");
+            System.out.println("2. Iniciar sesión");
+            System.out.println("3. Leer usuarios");
+            System.out.println("4. Actualizar usuario");
+            System.out.println("5. Eliminar usuario");
+            System.out.println("6. Salir");
 
             int option = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer
+            scanner.nextLine(); //limpia el buffer
 
             switch (option) {
                 case 1:
                     authSystem.register();
                     break;
                 case 2:
-                    authSystem.readUsers();
+                    authSystem.login();//funcion login
                     break;
                 case 3:
-                    authSystem.updateUser();
+                    authSystem.readUsers();
                     break;
                 case 4:
-                    authSystem.deleteUser();
+                    authSystem.updateUser();
                     break;
                 case 5:
+                    authSystem.deleteUser();
+                    break;
+                case 6:
                     running = false;
                     break;
                 default:
                     System.out.println("Opción no válida. Intente nuevamente.");
             }
         }
-
         scanner.close();
     }
 }

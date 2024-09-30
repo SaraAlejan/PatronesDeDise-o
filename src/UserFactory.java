@@ -2,19 +2,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class UserFactory {
-    protected List<User> users = new ArrayList<>(); // Lista de usuarios
+    protected List<User> users = new ArrayList<>();
 
     public abstract User createUser(String name, String email, String password);
 
     public User registerUser(String name, String email, String password) {
         User user = createUser(name, email, password);
-        // Lógica adicional para registrar el usuario, como validación y almacenamiento
-        users.add(user); // Agregar a la lista de usuarios
+        users.add(user); //Añade el usuario
         System.out.println("Usuario " + user.getName() + " registrado con éxito como " + user.getRole());
         return user;
     }
 
-    // Método para leer usuarios
+    public User loginUser(String email, String password) {
+        for (User user : users) {
+            if (user.authenticate(email, password)) {
+                System.out.println("Inicio de sesión exitoso. Bienvenido, " + user.getName() + ".");
+                return user;
+            }
+        }
+        System.out.println("Error: Email o contraseña incorrectos.");
+        return null; // Devuelve null si no se encuentran credenciales válidas
+    }
+
     public void readUsers() {
         if (users.isEmpty()) {
             System.out.println("No hay usuarios registrados.");
@@ -25,7 +34,6 @@ public abstract class UserFactory {
         }
     }
 
-    // Método para actualizar un usuario
     public void updateUser(String email, String newName, String newPassword) {
         for (User user : users) {
             if (user.getEmail().equals(email)) {
@@ -38,7 +46,6 @@ public abstract class UserFactory {
         System.out.println("Usuario con el email " + email + " no encontrado.");
     }
 
-    // Método para eliminar un usuario
     public void deleteUser(String email) {
         User userToDelete = null;
         for (User user : users) {

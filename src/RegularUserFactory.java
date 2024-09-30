@@ -4,3 +4,4 @@ public class RegularUserFactory extends UserFactory {
     public User createUser(String name, String email, String password) {
         return new RegularUser(name, email, password);
     }
+}
