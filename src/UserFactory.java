@@ -21,7 +21,7 @@ public abstract class UserFactory {
             }
         }
         System.out.println("Error: Email o contraseña incorrectos.");
-        return null; // Devuelve null si no se encuentran credenciales válidas
+        return null;
     }
 
     public void readUsers() {
