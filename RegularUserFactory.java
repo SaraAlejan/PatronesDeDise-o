@@ -1,90 +1,90 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
 
 public class RegularUserFactory extends UserFactory {
-    private static int currentClientId = 1; // Contador para generar IDs únicos
+    protected Connection connection;
 
-    @Override
+    // Constructor inicializa la conexión a la base de datos
+    public RegularUserFactory() {
+        try {
+            connection = DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            System.out.println("Error al conectar a la base de datos: " + e.getMessage());
+        }
+    }
+
     public User createUser(String name, String surname, String email, String password, String phone, String address, int cliente_id) {
         return new RegularUser(name, surname, email, password, phone, address, cliente_id);
     }
 
     public User registerUser(String name, String surname, String email, String phone, String address, String password) {
-        // Genera un nuevo cliente_id para cada registro
-        int cliente_id = generateClientId();
+        try {
+            if (isEmailRegistered(email)) {
+                System.out.println("Error: El email ya está registrado.");
+                return null;
+            }
 
-        // Crea el usuario utilizando el cliente_id generado
-        User user = createUser(name, surname, email, password, phone, address, cliente_id);
+            String sql = "INSERT INTO clientes (nombre, apellido, email, password, telefono, direccion, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, NOW())";
+            try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                stmt.setString(1, name);
+                stmt.setString(2, surname);
+                stmt.setString(3, email);
+                stmt.setString(4, password);
+                stmt.setString(5, phone);
+                stmt.setString(6, address);
 
-        // Guardar cliente en la base de datos
-        DatabaseUtils dbUtils = new DatabaseUtils();
-        dbUtils.insertClient(name, surname, email, phone, address);
+                stmt.executeUpdate();
 
-        // Agrega el usuario a la lista de usuarios
-        users.add(user);
-        System.out.println("Usuario " + user.getName() + " registrado con éxito como " + user.getRole());
-        return user;
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    int cliente_id = rs.getInt(1);
+                    System.out.println("Usuario registrado exitosamente con ID: " + cliente_id);
+                    return createUser(name, surname, email, password, phone, address, cliente_id);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al registrar usuario: " + e.getMessage());
+        }
+        return null;
     }
 
-    // Método para generar un nuevo cliente_id
-    private int generateClientId() {
-        return currentClientId++;
+    public boolean isEmailRegistered(String email) throws SQLException {
+        String query = "SELECT * FROM clientes WHERE email = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        }
     }
 
     public User loginUser(String email, String password) {
-        for (User user : users) {
-            if (user.authenticate(email, password)) {
-                System.out.println("Inicio de sesión exitoso. Bienvenido, " + user.getName() + ".");
-                return user;
+        try {
+            String query = "SELECT * FROM clientes WHERE email = ? AND password = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+                stmt.setString(1, email);
+                stmt.setString(2, password);
+
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    int cliente_id = rs.getInt("cliente_id");
+                    String name = rs.getString("nombre");
+                    String surname = rs.getString("apellido");
+                    String phone = rs.getString("telefono");
+                    String address = rs.getString("direccion");
+
+                    System.out.println("Inicio de sesión exitoso para: " + name);
+                    return createUser(name, surname, email, password, phone, address, cliente_id);
+                } else {
+                    System.out.println("Error: Email o contraseña incorrectos.");
+                }
             }
+        } catch (SQLException e) {
+            System.out.println("Error al iniciar sesión: " + e.getMessage());
         }
-        System.out.println("Error: Email o contraseña incorrectos.");
         return null;
-    }
-
-    public User findUserByEmail(String email) {
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    public boolean updateUser(String email, String newName, String newPassword) {
-        User user = findUserByEmail(email);
-        if (user != null) {
-            user.setName(newName);
-            user.setPassword(newPassword);
-            System.out.println("Usuario " + user.getName() + " actualizado con éxito.");
-            return true;
-        } else {
-            System.out.println("Error: Usuario no encontrado.");
-            return false;
-        }
-    }
-
-    public boolean deleteUser(String email) {
-        User user = findUserByEmail(email);
-        if (user != null) {
-            users.remove(user);
-            System.out.println("Usuario con correo " + email + " eliminado con éxito.");
-            return true;
-        } else {
-            System.out.println("Error: Usuario no encontrado.");
-            return false;
-        }
-    }
-
-    public void readUsers() {
-        if (users.isEmpty()) {
-            System.out.println("No hay usuarios registrados.");
-        } else {
-            System.out.println("Usuarios registrados:");
-            for (User user : users) {
-                System.out.println("Nombre: " + user.getName() + ", Email: " + user.getEmail() + ", Rol: " + user.getRole());
-            }
-        }
     }
 }
+
+
+
 

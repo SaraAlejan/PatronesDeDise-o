@@ -1,0 +1,109 @@
+05/12/2024 08:19 p. m.  VerificarDisponibilidad - Fallido: Error al verificar disponibilidad: Incorrect DATE value: '3'
+05/12/2024 08:19 p. m.  ActualizarReserva - Fallido: La habitación no está disponible en las fechas seleccionadas.
+05/12/2024 08:19 p. m.  VerificarDisponibilidad - Exitoso: Habitación disponible: true
+05/12/2024 08:19 p. m.  CrearReserva - Exitoso: Reserva creada para el cliente con ID 1
+05/12/2024 08:22 p. m.  EliminarReserva - Exitoso: Reserva eliminada con éxito.
+05/12/2024 10:28 p. m.  VerReservas - Fallido: Error al obtener reservas: No operations allowed after connection closed.
+05/12/2024 10:40 p. m.  VerReservas - Exitoso: Reservas mostradas para cliente ID 1
+05/12/2024 10:40 p. m.  VerReservas - Exitoso: Reservas mostradas para cliente ID 1
+05/12/2024 10:40 p. m.  VerificarDisponibilidad - Fallido: Error al verificar disponibilidad: Incorrect DATE value: '2'
+05/12/2024 10:40 p. m.  VerificarDisponibilidad - Exitoso: Habitación disponible: true
+05/12/2024 10:40 p. m.  CrearReserva - Exitoso: Reserva creada para el cliente con ID 1
+05/12/2024 10:41 p. m.  VerReservas - Exitoso: Reservas mostradas para cliente ID 1
+Inicio de sesión: jefe@.com
+Registro del usuario: mar@.com
+[2024-12-06T00:36:01.511173300] Inicio de sesión: jefe@.com
+[2024-12-06T00:36:18.500561100] Registro del usuario: gdfgd@.com
+[2024-12-06T00:37:28.713370] Inicio de sesión: mama@.com
+06/12/2024 12:37 a. m.  VerReservas - Exitoso: Reservas mostradas para cliente ID 1
+06/12/2024 12:37 a. m.  VerReservas - Exitoso: Reservas mostradas para cliente ID 1
+[2024-12-06T17:22:13.194637900] Registro del usuario: ana@.com
+[2024-12-06T17:22:30.422310400] Inicio de sesión: ana@.com
+06/12/2024 05:23 p. m.  VerificarDisponibilidad - Exitoso: Habitación disponible: true
+06/12/2024 05:23 p. m.  CrearReserva - Exitoso: Reserva creada para el cliente con ID 24
+[2024-12-06T17:23:01.133696100] Reserva en habitación 5 por el usuario ana@.com
+06/12/2024 05:23 p. m.  VerReservas - Exitoso: Reservas mostradas para cliente ID 24
+[2024-12-06T17:23:59.276258800] Inicio de sesión: ana@.com
+[2024-12-06T17:25:52.615410900] Inicio de sesión: ana@.com
+[2024-12-06T17:30:23.448963700] Inicio de sesión: ana@.com
+06/12/2024 05:31 p. m.  VerificarDisponibilidad - Exitoso: Habitación disponible: true
+06/12/2024 05:31 p. m.  ActualizarReserva - Exitoso: Reserva actualizada.
+06/12/2024 05:31 p. m.  EliminarReserva - Exitoso: Reserva eliminada.
+06/12/2024 05:31 p. m.  EliminarReserva - Exitoso: Reserva eliminada.
+[2024-12-06T17:33:03.532981300] Registro del usuario: jefe@.com
+[2024-12-06T17:33:11.380814600] Inicio de sesión: jefe@.com
+[2024-12-06T17:33:21.500022100] Eliminación del usuario: ana@.com
+[2024-12-06T17:36:49.914048400] Inicio de sesión: jefe@.com
+[2024-12-06T17:37:31.862016200] Registro del usuario: pe@.com
+[2024-12-06T17:44:21.173450700] Inicio de sesión: jefe@.com
+[2024-12-06T17:44:39.054103400] Actualización del usuario: jefe@.com
+[2024-12-06T17:45:13.764663900] Registro del usuario: mar@.com
+[2024-12-06T17:45:27.709326800] Lectura de usuario: jefe@.com
+[2024-12-06T17:45:58.336286] Inicio de sesión: jefe@.com
+[2024-12-06T17:46:17.755994200] Registro del usuario: mar@.com
+[2024-12-06T17:48:43.750809500] Inicio de sesión: jefe@.com
+[2024-12-06T17:48:58.798949800] Registro del usuario: mar@.com
+[2024-12-06T17:49:12.892154400] Lectura de usuario: mar@.com
+[2024-12-06T17:49:12.893259700] Lectura de usuario: jefe@.com
+[2024-12-06T17:50:22.932047900] Inicio de sesión: jefe@.com
+[2024-12-06T17:50:44.322150200] Registro del usuario: pe@.com
+[2024-12-06T17:51:15.140172500] Inicio de sesión: jefe@.com
+[2024-12-06T17:51:44.625163900] Registro del usuario: alejo@.com
+[2024-12-06T17:54:03.985891200] Inicio de sesión: jefe@.com
+[2024-12-06T17:54:19.803475900] Registro del usuario: alejo@.com
+[2024-12-06T17:54:29.632305200] Lectura de usuario: mar@.com
+[2024-12-06T17:54:29.632305200] Lectura de usuario: jefe@.com
+[2024-12-06T17:54:29.633303500] Lectura de usuario: alejo@.com
+[2024-12-06T17:55:28.202884400] Eliminación del usuario: alejo@.com
+[2024-12-06T17:55:34.356673] Lectura de usuario: mar@.com
+[2024-12-06T17:55:34.357678200] Lectura de usuario: jefe@.com
+[2024-12-06T17:55:47.418944100] Eliminación del usuario: mar@.com
+[2024-12-06T17:55:49.306713800] Lectura de usuario: jefe@.com
+[2024-12-06T17:56:01.706874200] Eliminación del usuario: jefe@.com
+[2024-12-06T18:03:46.518529700] Registro del usuario: ana@.com
+[2024-12-06T18:03:52.806663900] Inicio de sesión: ana@.com
+[2024-12-06T18:04:17.917845] Inicio de sesión: ana@.com
+06/12/2024 06:04 p. m.  VerReservas - Exitoso: Reservas mostradas para cliente ID 28
+06/12/2024 06:04 p. m.  VerificarDisponibilidad - Exitoso: Habitación disponible: true
+06/12/2024 06:04 p. m.  CrearReserva - Exitoso: Reserva creada para el cliente con ID 28
+[2024-12-06T18:04:39.758770500] Reserva en habitación 103 por el usuario ana@.com
+06/12/2024 06:04 p. m.  VerReservas - Exitoso: Reservas mostradas para cliente ID 28
+06/12/2024 06:05 p. m.  VerificarDisponibilidad - Exitoso: Habitación disponible: true
+06/12/2024 06:05 p. m.  ActualizarReserva - Exitoso: Reserva actualizada.
+06/12/2024 06:05 p. m.  VerReservas - Exitoso: Reservas mostradas para cliente ID 28
+06/12/2024 06:05 p. m.  EliminarReserva - Exitoso: Reserva eliminada para cliente ID 28
+[2024-12-06T18:06:38.562098800] Registro del usuario: marce
+[2024-12-06T18:06:50.199036200] Inicio de sesión: marce
+[2024-12-06T18:25:45.046043500] Registro del usuario: papa
+[2024-12-06T18:25:54.631063200] Inicio de sesión: papa
+[2024-12-06T18:26:16.424447200] Registro del usuario: mama
+[2024-12-06T18:32:27.990723800] Registro del usuario: pepe
+[2024-12-06T18:32:37.621846] Inicio de sesión: pepe
+[2024-12-06T18:33:50.543820500] Registro del usuario: jefe@.com
+[2024-12-06T18:34:29.696736400] Registro del usuario: jefe@.com
+[2024-12-06T18:45:14.689308] Registro del usuario: pipi
+[2024-12-06T18:45:38.917974500] Registro del usuario: pipi@.com
+[2024-12-06T18:46:22.794834900] Registro del usuario: pipi@gmail.com
+[2024-12-06T18:46:34.412556900] Inicio de sesión: pipi@gmail.com
+[2024-12-06T18:47:23.592579200] Registro del usuario: jefe@g.com
+[2024-12-06T18:47:35.160658300] Inicio de sesión: jefe@g.com
+[2024-12-06T18:47:39.242794600] Lectura de usuario: pipi@gmail.com
+[2024-12-06T18:47:39.243921800] Lectura de usuario: pepe
+[2024-12-06T18:47:39.244919300] Lectura de usuario: papa
+[2024-12-06T18:47:39.244919300] Lectura de usuario: ana@.com
+[2024-12-06T18:47:39.246014700] Lectura de usuario: marce
+[2024-12-06T18:47:39.246014700] Lectura de usuario: jefe@g.com
+[2024-12-06T18:48:05.528334200] Eliminación del usuario: pepe
+[2024-12-06T18:48:08.098003400] Eliminación del usuario: papa
+[2024-12-06T18:48:11.490095900] Lectura de usuario: pipi@gmail.com
+[2024-12-06T18:48:11.491093700] Lectura de usuario: ana@.com
+[2024-12-06T18:48:11.491093700] Lectura de usuario: marce
+[2024-12-06T18:48:11.492183600] Lectura de usuario: jefe@g.com
+[2024-12-06T18:48:24.648178700] Eliminación del usuario: marce
+[2024-12-06T18:48:26.600108700] Lectura de usuario: pipi@gmail.com
+[2024-12-06T18:48:26.601109500] Lectura de usuario: ana@.com
+[2024-12-06T18:48:26.601109500] Lectura de usuario: jefe@g.com
+[2024-12-06T18:48:52.790595800] Eliminación del usuario: pipi@gmail.com
+[2024-12-06T18:48:56.145477100] Lectura de usuario: ana@.com
+[2024-12-06T18:48:56.145477100] Lectura de usuario: jefe@g.com
+[2024-12-06T18:49:05.253476700] Eliminación del usuario: ana@.com

@@ -4,7 +4,7 @@ public class AdminUser extends User {
     private String address;
 
     public AdminUser(String name, String surname, String email, String password, String phone, String address, int cliente_id) {
-        super(name, surname, email, password, phone, address, cliente_id); // Pasa todos los parámetros a la superclase
+        super(name, surname, email, password, phone, address, cliente_id);
         this.surname = surname;
         this.phone = phone;
         this.address = address;
@@ -12,22 +12,10 @@ public class AdminUser extends User {
 
     @Override
     public String getRole() {
-        return "Admin"; // Rol asignado
-    }
-
-    // Métodos getters para los nuevos campos
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getAddress() {
-        return address;
+        return "Admin";
     }
 }
+
 
 
 

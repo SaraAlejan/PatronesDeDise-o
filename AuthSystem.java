@@ -1,4 +1,8 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 public class AuthSystem {
     private UserFactory userFactory;
@@ -8,6 +12,16 @@ public class AuthSystem {
     public AuthSystem(UserFactory factory) {
         this.userFactory = factory;
     }
+
+    private void logAction(String action) {
+        try (FileWriter writer = new FileWriter("application.log", true)) {
+            String timestamp = java.time.LocalDateTime.now().toString(); // Fecha y hora actual
+            writer.write("[" + timestamp + "] " + action + "\n");
+        } catch (IOException e) {
+            System.out.println("Error al escribir en el archivo de log.");
+        }
+    }
+
 
     public void register() {
         System.out.println("Ingrese su nombre:");
@@ -30,6 +44,7 @@ public class AuthSystem {
 
         if (userFactory != null) {
             userFactory.registerUser(name, surname, email, phone, address, password);
+            logAction("Registro del usuario: " + email);
         } else {
             System.out.println("Error: No se ha seleccionado un tipo de usuario.");
         }
@@ -38,6 +53,7 @@ public class AuthSystem {
     public void login() {
         System.out.println("Ingrese su correo:");
         String email = scanner.nextLine();
+
         System.out.println("Ingrese su contraseña:");
         String password = scanner.nextLine();
 
@@ -45,6 +61,9 @@ public class AuthSystem {
         if (user != null) {
             loggedInUser = user;
             System.out.println("Inicio de sesión exitoso. Bienvenido, " + user.getName() + ".");
+            logAction("Inicio de sesión: " + email);
+        } else {
+            System.out.println("Error al iniciar sesión. Verifique sus credenciales.");
         }
     }
 
@@ -57,33 +76,62 @@ public class AuthSystem {
         System.out.println("Ingrese el número de habitación:");
         int roomNumber = scanner.nextInt();
         scanner.nextLine(); // Limpiar el buffer
+
         System.out.println("Ingrese la fecha de check-in (YYYY-MM-DD):");
         String checkInDate = scanner.nextLine();
+
         System.out.println("Ingrese la fecha de check-out (YYYY-MM-DD):");
         String checkOutDate = scanner.nextLine();
 
         BookingSystem bookingSystem = BookingSystem.getInstance();
         bookingSystem.makeReservation(loggedInUser.getClienteId(), roomNumber, checkInDate, checkOutDate);
+        logAction("Reserva en habitación " + roomNumber + " por el usuario " + loggedInUser.getEmail());
     }
 
     public void readUsers() {
-        userFactory.readUsers();
+        List<User> users = userFactory.readUsersFromDatabase();
+
+        if (users.isEmpty()) {
+            System.out.println("No hay usuarios registrados.");
+        } else {
+            System.out.println("Usuarios registrados:");
+            for (User user : users) {
+                System.out.println("Nombre: " + user.getName() + ", Email: " + user.getEmail() + ", Dirección: " + user.getAddress());
+                logAction("Lectura de usuario: " + user.getEmail());
+            }
+        }
     }
 
     public void updateUser() {
         System.out.println("Ingrese el correo del usuario a actualizar:");
         String email = scanner.nextLine();
+
         System.out.println("Ingrese el nuevo nombre:");
         String newName = scanner.nextLine();
+
         System.out.println("Ingrese la nueva contraseña:");
         String newPassword = scanner.nextLine();
-        userFactory.updateUser(email, newName, newPassword);
+
+        boolean success = userFactory.updateUserInDatabase(email, newName, newPassword);
+        if (success) {
+            System.out.println("Usuario actualizado con éxito.");
+            logAction("Actualización del usuario: " + email);
+        } else {
+            System.out.println("Error: No se pudo actualizar el usuario.");
+        }
     }
 
     public void deleteUser() {
         System.out.println("Ingrese el correo del usuario a eliminar:");
         String email = scanner.nextLine();
-        userFactory.deleteUser(email);
+
+        boolean success = userFactory.deleteUserInDatabase(email);
+        if (success) {
+            System.out.println("Usuario eliminado correctamente.");
+            logAction("Eliminación del usuario: " + email);
+        } else {
+            System.out.println("No se pudo eliminar al usuario.");
+        }
     }
 
     public void adminMenu() {
@@ -115,6 +163,7 @@ public class AuthSystem {
         System.out.println("Opciones de administrador:");
         System.out.println("1. Registrarse como administrador");
         System.out.println("2. Iniciar sesión como administrador");
+
         int choice = scanner.nextInt();
         scanner.nextLine(); // Limpiar el buffer
 
@@ -125,10 +174,9 @@ public class AuthSystem {
         } else if (choice == 2) {
             login();
         } else {
-            System.out.println("Opción no válida. Intente nuevamente.");
+            System.out.println("Opción no válida.");
         }
 
-        // Si el inicio de sesión fue exitoso, mostrar el menú de administración
         if (loggedInUser != null) {
             adminMenu();
         }
@@ -155,36 +203,78 @@ public class AuthSystem {
                     }
                 }
                 case 3 -> userMenuRunning = false;
-                default -> System.out.println("Opción no válida. Intente nuevamente.");
+                default -> System.out.println("Opción no válida.");
             }
         }
     }
 
     public void reservationMenu() {
         boolean reservationMenuRunning = true;
+        BookingSystem bookingSystem = BookingSystem.getInstance();
 
         while (reservationMenuRunning) {
             System.out.println("\nSeleccione una opción:");
             System.out.println("1. Hacer reserva");
-            System.out.println("2. Cerrar sesión");
+            System.out.println("2. Ver reservas");
+            System.out.println("3. Actualizar reserva");
+            System.out.println("4. Eliminar reserva");
+            System.out.println("5. Cerrar sesión");
 
             int option = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Limpiar el buffer
 
             switch (option) {
                 case 1 -> handleReservations();
+
                 case 2 -> {
+                    // Ver reservas del cliente que está logueado
+                    bookingSystem.viewReservations(loggedInUser.getClienteId());
+                }
+
+                case 3 -> {
+                    System.out.println("Ingrese el ID de la reserva a actualizar:");
+                    int reservaId = scanner.nextInt();
+                    scanner.nextLine(); // Limpiar el buffer
+
+                    System.out.println("Ingrese el nuevo número de habitación:");
+                    int habitacion = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.println("Ingrese la nueva fecha de check-in (YYYY-MM-DD):");
+                    String fechaCheckIn = scanner.nextLine();
+
+                    System.out.println("Ingrese la nueva fecha de check-out (YYYY-MM-DD):");
+                    String fechaCheckOut = scanner.nextLine();
+
+                    // Actualizar solo si la reserva pertenece al cliente actual
+                    bookingSystem.updateReservation(reservaId, habitacion, fechaCheckIn, fechaCheckOut, loggedInUser.getClienteId());
+                }
+
+                case 4 -> {
+                    System.out.println("Ingrese el ID de la reserva a eliminar:");
+                    int reservaId = scanner.nextInt();
+                    scanner.nextLine(); // Limpiar el buffer
+
+                    // Eliminar solo si la reserva pertenece al cliente actual
+                    bookingSystem.deleteReservation(reservaId, loggedInUser.getClienteId());
+                }
+
+                case 5 -> {
                     loggedInUser = null;
                     reservationMenuRunning = false;
+                    System.out.println("Sesión cerrada.");
                 }
-                default -> System.out.println("Opción no válida. Intente nuevamente.");
+
+                default -> System.out.println("Opción no válida.");
             }
         }
     }
 
+
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Seleccione el tipo de usuario (1. Usuario, 2. Administrador):");
+        Scanner scanner = new Scanner(System.in);
         int userType = scanner.nextInt();
         scanner.nextLine();
 
@@ -195,19 +285,17 @@ public class AuthSystem {
             factory = new RegularUserFactory();
             authSystem = new AuthSystem(factory);
             authSystem.userMenu();
-
         } else if (userType == 2) {
             factory = new AdminUserFactory();
             authSystem = new AuthSystem(factory);
             authSystem.adminAuthentication();
-
         } else {
             System.out.println("Opción no válida.");
         }
 
         scanner.close();
     }
+
+
+
 }
-
-
-
